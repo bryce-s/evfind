@@ -151,11 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EverythingSearchAdapter.cpp" />
     <ClCompile Include="evfind.cpp" />
     <ClCompile Include="ParseArgs.cpp" />
+    <ClCompile Include="WindowsSearchAdapter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EverythingSearchAdapter.h" />
     <ClInclude Include="ParseArgs.h" />
+    <ClInclude Include="WindowsSearchAdapter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

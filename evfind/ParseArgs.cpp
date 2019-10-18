@@ -2,7 +2,7 @@
 
 using namespace boost::program_options;
 
-std::vector<std::string> ParseArgs::parseArgs(const int argc, const char *argv[]) {
+void ParseArgs::parseArgs(const int argc, const char *argv[]) {
 	namespace po = boost::program_options;
 	po::options_description desc("Allowed options");
 	desc.add_options()("help", "produce help message")
@@ -25,6 +25,15 @@ std::vector<std::string> ParseArgs::parseArgs(const int argc, const char *argv[]
 	if (vm.count("help")) {
 		options.push_back("help");
 	}
-	return std::vector<std::string>();
+}
+
+std::vector<std::string> ParseArgs::getSearchTerms()
+{
+	return searchTerms;
+}
+
+std::vector<std::string> ParseArgs::getOptions()
+{
+	return options;
 }
 

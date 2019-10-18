@@ -9,11 +9,13 @@
 
 class ParseArgs
 {
-
 	std::vector<std::string> searchTerms;
 	std::vector<std::string> options;
-
 public:
-	std::vector<std::string> parseArgs(const int argc, const char *argv[]);
+	void parseArgs(const int argc, const char *argv[]);
+
+	std::vector<std::string> getSearchTerms();
+	std::vector<std::string> getOptions();
+
 };
 
