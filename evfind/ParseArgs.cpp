@@ -14,4 +14,5 @@ std::vector<std::string> ParseArgs::parseArgs(const int argc, const char *argv[]
 	catch (progOpts::error& e) {
 		std::cerr << "a CLI parse error\n";
 	}
+	return std::vector<std::string>();
 }
