@@ -5,10 +5,15 @@
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
+#include <exception>
 
 class ParseArgs
 {
+
+	std::vector<std::string> searchTerms;
+	std::vector<std::string> options;
+
 public:
-	static std::vector<std::string> parseArgs(const int argc, const char *argv[]);
+	std::vector<std::string> parseArgs(const int argc, const char *argv[]);
 };
 
