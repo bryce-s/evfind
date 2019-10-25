@@ -9,7 +9,7 @@ int main(int argc, const char* argv[])
 	args.parseArgs(argc, argv);
 	std::vector<std::string> terms = args.getSearchTerms();
 
-	EverythingSearchAdapter e;
+	EverythingSearchAdapter e('/');
 	e.searchTerm("woof");
 
 
