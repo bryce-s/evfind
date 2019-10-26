@@ -50,12 +50,17 @@ void EverythingSearchAdapter::parseLastEverythingError()
 
 std::string EverythingSearchAdapter::winPathToUnix(std::string winPath)
 {
-	std::regex whitespace("\w");
-	std::string whitespaceStripped = std::regex_replace(winPath, whitespace, "\\s");
-	std::regex pathReplacer("\\");
-	std::string pathsReplaced = std::regex_replace(whitespaceStripped, whitespace, "/");
-	
-	return std::string();
+	std::string whitespaceStripped = "";
+	try {
+
+		std::regex whitespace("\w");
+		whitespaceStripped = std::regex_replace(winPath, whitespace, "\\s");
+		std::replace(whitespaceStripped.begin(), whitespaceStripped.end(), '\\', '/');
+	}
+	catch (std::regex_error re) {
+		std::cout << "regex error\n";
+	}
+	return whitespaceStripped;
 }
 
 void EverythingSearchAdapter::searchTerm(const std::string& term)
@@ -78,12 +83,13 @@ void EverythingSearchAdapter::searchTerm(const std::string& term)
 		std::string pathname = this->wstringToString(pathNameWide);
 
 
-		std::string joinedPaths = boost::str(joinPaths % wideFilename % widePath);
+		std::string joinedPaths = boost::str(joinPaths % pathname % filename);
 
+		std::string resStr = joinedPaths;
 		if (this->isUnixPath()) {
-			std::string resultString = this->winPathToUnix(joinedPaths);
+			resStr = this->winPathToUnix(joinedPaths);
 		}
-		std::wcout << widePath << std::endl;
+		std::cout << resStr << std::endl;
 		
 	}
 	
