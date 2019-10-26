@@ -1,14 +1,51 @@
 #include "EverythingSearchAdapter.h"
 
+std::string EverythingSearchAdapter::wstringToString(const std::wstring wstr)
+{
+	using convert_type = std::codecvt_utf8<wchar_t>;
+	std::wstring_convert<convert_type, wchar_t> converter;
+	return std::string(converter.to_bytes(wstr));
+}
+
 bool EverythingSearchAdapter::isUnixPath()
 {
 	return this->pathSeperatorChar == '/';
 }
 
-bool EverythingSearchAdapter::everythingServiceIsRunning()
+void EverythingSearchAdapter::queryEverything(const LPCWSTR query)
 {
-	
-	return false;
+	Everything_SetSearch(query);
+	const int noError = Everything_Query(true);
+	if (!noError) {
+		std::cerr << "Error making a query:\n";
+		this->parseLastEverythingError();
+	}
+}
+
+void EverythingSearchAdapter::parseLastEverythingError()
+{
+	switch (Everything_GetLastError()) {
+	    case EVERYTHING_ERROR_CREATETHREAD: 
+			std::cerr << "Failed to create the search query thread.\n";
+			break;
+		case EVERYTHING_ERROR_REGISTERCLASSEX:
+			std::cerr << "Failed to register the search query window class\n";
+			break;
+		case EVERYTHING_ERROR_CREATEWINDOW:
+			std::cerr << "Failed to create the search query window\n";
+			break;
+		case EVERYTHING_ERROR_IPC:
+			std::cerr << "Failed to establish IPC. Ensure Everything is running\n";
+			break;
+		case EVERYTHING_ERROR_MEMORY:
+			std::cerr << "Failed to allocate memory for query\n";
+			break;
+		case EVERYTHING_ERROR_INVALIDCALL:
+			std::cerr << "Call Everything_SetReplyWIndow before Everything_Query\n";
+			break; 
+		default:
+			break;
+	}
 }
 
 std::string EverythingSearchAdapter::winPathToUnix(std::string winPath)
@@ -25,27 +62,28 @@ void EverythingSearchAdapter::searchTerm(const std::string& term)
 {
 	// long pointer to constant wide string--prefix with L
 	// to make string wide. Is 2 bytes per char.
-	LPCWSTR query = L"Bryce";
+	LPCWSTR query = L"bryce";
 	
-
-	Everything_SetSearch(LPCWSTR(query));
-	Everything_Query(true);
+	this->queryEverything(query);
 
 	boost::format joinPaths("%i\\%i");
 
 	for (auto i = 0; i < Everything_GetNumResults(); i++) {
-		LPCWSTR filename = Everything_GetResultFileName(i);
-		LPCWSTR path = Everything_GetResultPath(i);
-		std::wstring fnamewide = filename;
-		// need to figure out how to cast wstring to string
-		std::string fname = string_cast<std::string>(fnamewide);
+		LPCWSTR wideFilename = Everything_GetResultFileName(i);
+		LPCWSTR widePath = Everything_GetResultPath(i);
+		std::wstring fnamewide = wideFilename;
+		std::wstring pathNameWide = widePath;
 
-		std::string joinedPaths = boost::str(joinPaths % filename % path);
+		std::string filename = this->wstringToString(fnamewide);
+		std::string pathname = this->wstringToString(pathNameWide);
+
+
+		std::string joinedPaths = boost::str(joinPaths % wideFilename % widePath);
 
 		if (this->isUnixPath()) {
 			std::string resultString = this->winPathToUnix(joinedPaths);
 		}
-		std::wcout << path << std::endl;
+		std::wcout << widePath << std::endl;
 		
 	}
 	

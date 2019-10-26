@@ -21,7 +21,9 @@ void ParseArgs::parseArgs(const int argc, const char *argv[]) {
 		std::cerr << e.what() << '\n' << '\n';
 		std::cerr << desc << '\n';
 	}
-	searchTerms = vm["search"].as<std::vector<std::string>>();
+	if (vm.size() > 0) {
+		searchTerms = vm["search"].as<std::vector<std::string>>();
+	}
 	if (vm.count("help")) {
 		options.push_back("help");
 	}

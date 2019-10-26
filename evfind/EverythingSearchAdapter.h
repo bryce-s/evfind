@@ -4,20 +4,26 @@
 #include <string>
 #include <iostream>
 #include "include/Everything.h"
+#include <clocale>
+#include <locale>
+#include <codecvt>
+#include <vector>
 #include <boost/format.hpp>
-#include <boost/s>
+#include <locale>
 #include <regex>
 
 class EverythingSearchAdapter
 {
 
+	std::string wstringToString(const std::wstring);
+
 	char pathSeperatorChar;
 
 	bool isUnixPath();
 
-	bool everythingServiceIsRunning();
-	
+	void queryEverything(const LPCWSTR);
 
+	void parseLastEverythingError();
 
 	// converts a windows path to a unix path
 	std::string winPathToUnix(std::string);
