@@ -6,5 +6,5 @@
 
 * It means I often want to use `mdfind` in `Windows Subsystem Linux` or `Git Bash`. Sadly, `mdfind` is a Mac OS specific tool. There are no good bash-compliant system indexers avaliable for Windows. So--we reimplement `mdfind`.
 
--Why isn't locate a good alternative?
+-Why isn't `locate` a good alternative?
 * Sometimes it is. Often, however, running `updatedb` is slow and annoying.
