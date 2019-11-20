@@ -56,7 +56,7 @@ std::string EverythingSearchAdapter::winPathToUnix(std::string winPath)
 		static std::regex whitespace("\w");
 		stripped = std::regex_replace(winPath, whitespace, "\\s");
 		std::replace(stripped.begin(), stripped.end(), '\\', '/');
-		static std::regex driveMount("[A-Z]:\\");
+		static std::regex driveMount("[A-Z]:\\\\");
 		static std::smatch match;
 
 		while (std::regex_search(stripped, match, driveMount)) {
@@ -72,7 +72,7 @@ std::string EverythingSearchAdapter::winPathToUnix(std::string winPath)
 		}
 	}
 	catch (std::regex_error re) {
-		std::cout << "regex error\n";
+		std::cout << re.what();
 	}
 	return stripped;
 }
