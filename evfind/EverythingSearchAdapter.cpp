@@ -50,17 +50,31 @@ void EverythingSearchAdapter::parseLastEverythingError()
 
 std::string EverythingSearchAdapter::winPathToUnix(std::string winPath)
 {
-	std::string whitespaceStripped = "";
+	std::string stripped = "";
 	try {
 
-		std::regex whitespace("\w");
-		whitespaceStripped = std::regex_replace(winPath, whitespace, "\\s");
-		std::replace(whitespaceStripped.begin(), whitespaceStripped.end(), '\\', '/');
+		static std::regex whitespace("\w");
+		stripped = std::regex_replace(winPath, whitespace, "\\s");
+		std::replace(stripped.begin(), stripped.end(), '\\', '/');
+		static std::regex driveMount("[A-Z]:\\");
+		static std::smatch match;
+
+		while (std::regex_search(stripped, match, driveMount)) {
+			if (match.length() != 1) {
+				throw std::length_error("Matched more than one drive letter in string.\n");
+			}
+			std::string driveLetterStr = match[0]; 
+			std::string driveLetter = std::to_string(driveLetterStr[0]);
+			static boost::format mountPath("/mnt/%i");
+			std::string unixDriveLetterStr = boost::str(mountPath % driveLetter);
+			stripped = std::regex_replace(stripped, driveMount, unixDriveLetterStr);
+			
+		}
 	}
 	catch (std::regex_error re) {
 		std::cout << "regex error\n";
 	}
-	return whitespaceStripped;
+	return stripped;
 }
 
 void EverythingSearchAdapter::searchTerm(const std::string& term)
