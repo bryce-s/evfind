@@ -11,11 +11,15 @@
 #include <boost/format.hpp>
 #include <locale>
 #include <regex>
+#include <ctype.h>
 
 class EverythingSearchAdapter
 {
 
 	std::string wstringToString(const std::wstring);
+
+
+	bool escapeWhitespace;
 
 	char pathSeperatorChar;
 
@@ -30,7 +34,7 @@ class EverythingSearchAdapter
 
 public:
 
-	EverythingSearchAdapter(const char sep) : pathSeperatorChar(sep) {}
+	EverythingSearchAdapter(const char sep, const bool esc) : pathSeperatorChar(sep), escapeWhitespace(esc)  {}
 
 	void searchTerm(const std::string& term);
 

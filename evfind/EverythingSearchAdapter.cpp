@@ -52,23 +52,25 @@ std::string EverythingSearchAdapter::winPathToUnix(std::string winPath)
 {
 	std::string stripped = "";
 	try {
-
-		static std::regex whitespace("\w");
-		stripped = std::regex_replace(winPath, whitespace, "\\s");
+		
+		stripped = winPath;
 		std::replace(stripped.begin(), stripped.end(), '\\', '/');
-		static std::regex driveMount("[A-Z]:\\\\");
+		static std::regex whitespace("\\s+");
+		if (this->escapeWhitespace) {
+			stripped = std::regex_replace(stripped, whitespace, "\\ ");
+		}
+		static std::regex driveMount("[A-Z]:/");
 		static std::smatch match;
 
 		while (std::regex_search(stripped, match, driveMount)) {
-			if (match.length() != 1) {
+			if (match.size() != 1) {
 				throw std::length_error("Matched more than one drive letter in string.\n");
 			}
 			std::string driveLetterStr = match[0]; 
-			std::string driveLetter = std::to_string(driveLetterStr[0]);
-			static boost::format mountPath("/mnt/%i");
+			char driveLetter = tolower(driveLetterStr[0]);
+			static boost::format mountPath("/mnt/%i/");
 			std::string unixDriveLetterStr = boost::str(mountPath % driveLetter);
 			stripped = std::regex_replace(stripped, driveMount, unixDriveLetterStr);
-			
 		}
 	}
 	catch (std::regex_error re) {
