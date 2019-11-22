@@ -12,7 +12,10 @@ int main(int argc, const char* argv[])
 	std::vector<std::string> terms = args.getSearchTerms();
 
 	EverythingSearchAdapter e('/', true);
-	e.searchTerm("woof");
+	// really these should be a big string 
+	for (std::string s : terms) {
+		e.searchTerm(s);
+	}
 
 
 }

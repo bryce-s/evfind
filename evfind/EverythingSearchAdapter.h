@@ -36,7 +36,7 @@ public:
 
 	EverythingSearchAdapter(const char sep, const bool esc) : pathSeperatorChar(sep), escapeWhitespace(esc)  {}
 
-	void searchTerm(const std::string& term);
+	void searchTerm(std::string& term);
 
 };
 

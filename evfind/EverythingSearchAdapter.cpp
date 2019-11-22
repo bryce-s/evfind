@@ -79,11 +79,12 @@ std::string EverythingSearchAdapter::winPathToUnix(std::string winPath)
 	return stripped;
 }
 
-void EverythingSearchAdapter::searchTerm(const std::string& term)
+void EverythingSearchAdapter::searchTerm(std::string& term)
 {
 	// long pointer to constant wide string--prefix with L
 	// to make string wide. Is 2 bytes per char.
-	LPCWSTR query = L"bryce";
+	std::wstring ws = std::wstring(term.begin(), term.end());
+	LPCWSTR query = ws.c_str();
 	
 	this->queryEverything(query);
 
