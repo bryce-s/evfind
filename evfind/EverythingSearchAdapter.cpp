@@ -95,11 +95,8 @@ void EverythingSearchAdapter::searchTerm(std::string& term)
 		LPCWSTR widePath = Everything_GetResultPath(i);
 		std::wstring fnamewide = wideFilename;
 		std::wstring pathNameWide = widePath;
-
 		std::string filename = this->wstringToString(fnamewide);
 		std::string pathname = this->wstringToString(pathNameWide);
-
-
 		std::string joinedPaths = boost::str(joinPaths % pathname % filename);
 
 		std::string resStr = joinedPaths;
