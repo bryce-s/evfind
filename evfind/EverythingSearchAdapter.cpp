@@ -88,7 +88,7 @@ void EverythingSearchAdapter::searchTerm(std::string& term)
 	
 	this->queryEverything(query);
 
-	boost::format joinPaths("%i\\%i");
+	static boost::format joinPaths("%i\\%i");
 
 	for (auto i = 0; i < Everything_GetNumResults(); i++) {
 		LPCWSTR wideFilename = Everything_GetResultFileName(i);

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 
+
 int main(int argc, const char* argv[])
 {
 	std::ios_base::sync_with_stdio(false);
@@ -11,7 +12,11 @@ int main(int argc, const char* argv[])
 	args.parseArgs(argc, argv);
 	std::vector<std::string> terms = args.getSearchTerms();
 
-	EverythingSearchAdapter e('/', true);
+	EverythingSearchAdapter e('/', 
+		(std::find(terms.begin(), terms.end(), WHITESPACE_ESCAPE) != terms.end()),
+		(std::find(terms.begin(), terms.end(), QUOTE_WHITESPACE) != terms.end())
+	
+	);
 	// really these should be a big string 
 	for (std::string s : terms) {
 		e.searchTerm(s);

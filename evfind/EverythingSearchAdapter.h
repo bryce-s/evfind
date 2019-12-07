@@ -18,6 +18,7 @@ class EverythingSearchAdapter
 
 	std::string wstringToString(const std::wstring);
 
+	bool quoteWhitespace;
 
 	bool escapeWhitespace;
 
@@ -34,7 +35,7 @@ class EverythingSearchAdapter
 
 public:
 
-	EverythingSearchAdapter(const char sep, const bool esc) : pathSeperatorChar(sep), escapeWhitespace(esc)  {}
+	EverythingSearchAdapter(const char sep, const bool esc, const bool wsp) : pathSeperatorChar(sep), escapeWhitespace(esc), quoteWhitespace(wsp)  {}
 
 	void searchTerm(std::string& term);
 

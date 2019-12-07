@@ -5,7 +5,11 @@
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
+#include <boost/format.hpp>
 #include <exception>
+
+#define WHITESPACE_ESCAPE "e"
+#define QUOTE_WHITESPACE "q"
 
 class ParseArgs
 {
