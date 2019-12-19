@@ -7,7 +7,7 @@ void ParseArgs::parseArgs(const int argc, const char *argv[]) {
 	po::options_description desc("Allowed options");
 
 	std::string searchStr = "search";
-	std::string help = "help";
+	std::string help = "help,h";
 
 	std::string escapeWhitespace = boost::str(boost::format("escape-whitespace,%1%") % WHITESPACE_ESCAPE);
 	std::string quoteWhitespace = boost::str(boost::format("quote-whitespace,%1%") % QUOTE_WHITESPACE);
@@ -15,7 +15,7 @@ void ParseArgs::parseArgs(const int argc, const char *argv[]) {
 	bool escapeWhitespaceFlag = false;
 	bool quoteWhitespaceFlag = false;
 
-	desc.add_options()("help", "produce help message")
+	desc.add_options()(help.c_str(), "produce help message")
 		(searchStr.c_str(), po::value<std::vector<std::string>>()->required(), "search terms")
 		(escapeWhitespace.c_str(), po::bool_switch(&escapeWhitespaceFlag), "Escape whitespace characters");
 	    (quoteWhitespace.c_str(), po::bool_switch(&quoteWhitespaceFlag), "Wrap all paths containing whitespace in quotes");
@@ -44,7 +44,7 @@ void ParseArgs::parseArgs(const int argc, const char *argv[]) {
 		}
 	}
 
-	if (vm.count("help")) {
+	if (vm.count("help,h")) {
 		options.push_back("help");
 	}
 }
