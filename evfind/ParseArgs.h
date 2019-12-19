@@ -10,6 +10,8 @@
 
 #define WHITESPACE_ESCAPE "e"
 #define QUOTE_WHITESPACE "q"
+#define COUNT_RESULTS "c"
+#define HELP_CHAR "h"
 
 class ParseArgs
 {

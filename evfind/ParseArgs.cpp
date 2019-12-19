@@ -7,18 +7,21 @@ void ParseArgs::parseArgs(const int argc, const char *argv[]) {
 	po::options_description desc("Allowed options");
 
 	std::string searchStr = "search";
-	std::string help = "help,h";
+	std::string help = boost::str(boost::format("help,%1%") % HELP_CHAR);
 
 	std::string escapeWhitespace = boost::str(boost::format("escape-whitespace,%1%") % WHITESPACE_ESCAPE);
 	std::string quoteWhitespace = boost::str(boost::format("quote-whitespace,%1%") % QUOTE_WHITESPACE);
+	std::string countResults = boost::str(boost::format("count-results,%1%") % COUNT_RESULTS);
 
 	bool escapeWhitespaceFlag = false;
 	bool quoteWhitespaceFlag = false;
+	bool countResultsFlag = false;
 
 	desc.add_options()(help.c_str(), "produce help message")
 		(searchStr.c_str(), po::value<std::vector<std::string>>()->required(), "search terms")
 		(escapeWhitespace.c_str(), po::bool_switch(&escapeWhitespaceFlag), "Escape whitespace characters");
 	    (quoteWhitespace.c_str(), po::bool_switch(&quoteWhitespaceFlag), "Wrap all paths containing whitespace in quotes");
+		(countResults.c_str(), po::bool_switch(&countResultsFlag), "Display count of results only");
 
 
 	po::positional_options_description pos;
@@ -41,6 +44,9 @@ void ParseArgs::parseArgs(const int argc, const char *argv[]) {
 		}
 		if (quoteWhitespaceFlag) {
 			this->searchTerms.push_back(QUOTE_WHITESPACE);
+		}
+		if (countResultsFlag) {
+			this->searchTerms.push_back(COUNT_RESULTS);
 		}
 	}
 

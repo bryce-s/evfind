@@ -1,5 +1,8 @@
 #pragma once
 #pragma comment(lib, "Everything64.lib")
+// note: this is not beinng copied to output dir right now, and there's
+//       no error at runtime. 
+
 
 #include <string>
 #include <iostream>
@@ -26,6 +29,8 @@ class EverythingSearchAdapter
 
 	bool isUnixPath();
 
+	bool countOnly;
+
 	void queryEverything(const LPCWSTR);
 
 	void parseLastEverythingError();
@@ -35,7 +40,8 @@ class EverythingSearchAdapter
 
 public:
 
-	EverythingSearchAdapter(const char sep, const bool esc, const bool wsp) : pathSeperatorChar(sep), escapeWhitespace(esc), quoteWhitespace(wsp)  {}
+	EverythingSearchAdapter(const char pathSeperatorChar_In, const bool escapeWhitespace_in, const bool quoteWhitespaceIn, const bool countOnly_in) 
+		: pathSeperatorChar(pathSeperatorChar_In), escapeWhitespace(escapeWhitespace_in), quoteWhitespace(quoteWhitespaceIn), countOnly(countOnly_in)  {}
 
 	void searchTerm(std::string& term);
 

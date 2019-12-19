@@ -14,7 +14,9 @@ int main(int argc, const char* argv[])
 
 	EverythingSearchAdapter e('/', 
 		(std::find(terms.begin(), terms.end(), WHITESPACE_ESCAPE) != terms.end()),
-		(std::find(terms.begin(), terms.end(), QUOTE_WHITESPACE) != terms.end())
+		(std::find(terms.begin(), terms.end(), QUOTE_WHITESPACE) != terms.end()),
+		(std::find(terms.begin(), terms.end(), HELP_CHAR) != terms.end())
+
 	
 	);
 	// really these should be a big string 
