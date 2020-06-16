@@ -183,8 +183,10 @@ namespace evfind
 
 		static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-        }
+			Args argParser = new Args();
+			List<char> arguments = argParser.runArguments(args);
+			
+		} 
     }
 }
 
