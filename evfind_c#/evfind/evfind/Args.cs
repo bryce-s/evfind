@@ -11,7 +11,7 @@ namespace evfind
     {
         public class Options
         { 
-            [Option('0', "0", Required=false, HelpText="Print an ASCII NUL character after each result path. Useful when used in conjunction with xargs -0")]
+            [Option('0', "null-char", Required=false, HelpText="Print an ASCII NUL character after each result path. Useful when used in conjunction with xargs -0")]
             public bool nullFlag { get; set; }
 
             [Option('l', "live", Required=false, HelpText = "evfind will live-update search results. The search can be cancelled with ctrl-c.")]

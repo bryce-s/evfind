@@ -185,7 +185,13 @@ namespace evfind
         {
 			Args argParser = new Args();
 			List<char> arguments = argParser.runArguments(args);
-			
+
+			Everything_SetSearchW("Bryce");
+			Everything_QueryW(true);
+			for (uint i = 0; i < Everything_GetNumResults(); i++)
+			{
+				Console.WriteLine(Everything_GetResultFileListFileName(i));
+			}
 		} 
     }
 }
