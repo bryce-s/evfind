@@ -7,6 +7,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 
 
+
 namespace evfind
 {
     class Program
@@ -68,6 +69,8 @@ namespace evfind
 		const int EVERYTHING_TARGET_MACHINE_X86 = 1;
 		const int EVERYTHING_TARGET_MACHINE_X64 = 2;
 		const int EVERYTHING_TARGET_MACHINE_ARM = 3;
+
+		const int WINDOWS_PATH_LENTH_LIMIT = 260;
 
 		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
 		public static extern UInt32 Everything_SetSearchW(string lpSearchString);
@@ -180,17 +183,21 @@ namespace evfind
 		public static extern UInt32 Everything_IncRunCountFromFileName(string lpFileName);
 
 
-
+/**/
 		static void Main(string[] args)
         {
 			Args argParser = new Args();
 			List<char> arguments = argParser.runArguments(args);
 
-			Everything_SetSearchW("Bryce");
+			Everything_SetSearchW("Bryce is");
 			Everything_QueryW(true);
+			Everything_SortResultsByPath();
+			var buffer = new StringBuilder(WINDOWS_PATH_LENTH_LIMIT);
 			for (uint i = 0; i < Everything_GetNumResults(); i++)
 			{
-				Console.WriteLine(Everything_GetResultFileListFileName(i));
+				Everything_GetResultFullPathName((uint)i, buffer, (uint)buffer.Capacity);
+				Console.WriteLine(buffer);
+				buffer.Clear();
 			}
 		} 
     }
