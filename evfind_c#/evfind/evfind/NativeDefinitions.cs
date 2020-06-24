@@ -7,11 +7,11 @@ namespace evfind
     internal class NativeDefinitions
     {
 
-        public const char nullChar = '0';
-        public const char live = 'l';
-        public const char count = 'c';
-        public const char onlyin = 'o';
-        public const char literal = 'l';
+        public const char NULLCHAR = '0';
+        public const char LIVE = 'l';
+        public const char COUNT = 'c';
+        public const char ONLYIN = 'o';
+        public const char LITERAL = 'l'; 
 
 
         public const int EVERYTHING_OK = 0;
@@ -72,3 +72,4 @@ namespace evfind
         public const int EVERYTHING_TARGET_MACHINE_ARM = 3;
     }
 }
+

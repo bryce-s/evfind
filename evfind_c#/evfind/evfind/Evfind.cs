@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 
 namespace evfind
 {
-    class Program
+    class Evfind
     {
-
-
-/**/
 		static void Main(string[] args)
         {
 			Args argParser = new Args();
@@ -27,6 +24,8 @@ namespace evfind
 			for (uint i = 0; i < NativeMethods.Everything_GetNumResults(); i++)
 			{
 				NativeMethods.Everything_GetResultFullPathName((uint)i, buffer, (uint)buffer.Capacity);
+				string windowsPath = buffer.ToString();
+				WslPath.convertWindowsPathToWsl(windowsPath);
 				Console.WriteLine(buffer);
 				buffer.Clear();
 			}

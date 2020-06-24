@@ -41,25 +41,25 @@ namespace evfind
             {
                 if (o.nullFlag)
                 {
-                    arguments.Add(NativeDefinitions.nullChar);
+                    arguments.Add(NativeDefinitions.NULLCHAR);
                 }
                 if (o.liveResults)
                 {
-                    arguments.Add(NativeDefinitions.live);
+                    arguments.Add(NativeDefinitions.LIVE);
                 }
                 if (o.count)
                 {
-                    arguments.Add(NativeDefinitions.count);
+                    arguments.Add(NativeDefinitions.COUNT);
                 }
                 // right way to check this?
                 if (o.onlyin != "")
                 {
-                    arguments.Add(NativeDefinitions.onlyin);
+                    arguments.Add(NativeDefinitions.ONLYIN);
                 }
 
                 if (o.literal)
                 {
-                    arguments.Add(NativeDefinitions.literal);
+                    arguments.Add(NativeDefinitions.LITERAL);
                 }
             });
             return arguments;
