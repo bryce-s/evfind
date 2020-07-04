@@ -36,9 +36,10 @@ namespace evfind
         {
         }
 
-        public List<char> runArguments(string[] args)
+        public Tuple<List<char>, Dictionary<char, string>> runArguments(string[] args)
         {
             List<char> arguments = new List<char>();
+            Dictionary<char, string> argValues = new Dictionary<char, string>();
             Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
             {
                 if (o.nullFlag)
@@ -57,6 +58,7 @@ namespace evfind
                 if (o.onlyin != null)
                 {
                     arguments.Add(NativeDefinitions.ONLYIN);
+                    argValues.Add(NativeDefinitions.ONLYIN, o.onlyin);
                 }
                 if (o.literal)
                 {
@@ -65,9 +67,10 @@ namespace evfind
                 if (o.fileName != null) 
                 {
                     arguments.Add(NativeDefinitions.NAME);
+                    argValues.Add(NativeDefinitions.NAME, o.fileName);
                 }
             });
-            return arguments;
+            return Tuple.Create(arguments, argValues);
         }
 
 

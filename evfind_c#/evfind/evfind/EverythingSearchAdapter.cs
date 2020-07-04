@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace evfind
@@ -11,27 +12,50 @@ namespace evfind
     {
 
         List<char> m_SearchOptions;
+        Dictionary<char, string> m_argValues;
 
-        public EverythingSearchAdapter(ref List<Char> searchOptions_in) {
-            m_SearchOptions = searchOptions_in; 
+        public EverythingSearchAdapter(Tuple<List<char>, Dictionary<char, string>> searchOptions_in) {
+            m_SearchOptions = searchOptions_in.Item1;
+            m_argValues = searchOptions_in.Item2;
         }
+
+
+        private bool optionPresent(char c)
+        {
+            return m_SearchOptions.Contains(c);
+        }
+           
 
         private void addClosingSpace(StringBuilder queryBuilder)
         {
             queryBuilder.Append(" ");
         }
 
+
+        private void matchSpecificPath(StringBuilder queryBuilder)
+        {
+            string path = m_argValues[NativeDefinitions.ONLYIN];
+            // convert to windows path and validate it
+            path = WslPath.wslToWin(path);
+            queryBuilder.Append($"\"{path}\"");
+            addClosingSpace(queryBuilder);
+        }
+
         private void matchFileName(StringBuilder queryBuilder)
         {
-            string stubfile = "stub";
-            queryBuilder.Append($"file: ${stubfile}");
+            string fileArgument = m_argValues[NativeDefinitions.NAME];
+            queryBuilder.Append($"file: ${fileArgument}");
             addClosingSpace(queryBuilder);
         }
 
         private string buildSearchQuery()
         {
             StringBuilder queryBuilder = new StringBuilder();
-            if (m_SearchOptions.Contains(NativeDefinitions.NAME))
+            if (optionPresent(NativeDefinitions.NAME))
+            {
+                matchFileName(queryBuilder);
+            }
+            if (optionPresent(NativeDefinitions.ONLYIN))
             {
 
             }

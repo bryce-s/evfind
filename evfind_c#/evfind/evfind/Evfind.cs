@@ -13,7 +13,15 @@ namespace evfind
 		static void Main(string[] args)
         {
 			Args argParser = new Args();
-			List<char> arguments = argParser.runArguments(args);
+			Tuple<List<char>, Dictionary<char, string>> arguments = argParser.runArguments(args);
+
+			EverythingSearchAdapter searchAdapter = new EverythingSearchAdapter(arguments); 
+			
+
+			foreach(string s in args)
+			{
+				Console.WriteLine(s);
+			}
 
 			NativeMethods.Everything_SetSearchW("bryce");
 			NativeMethods.Everything_QueryW(true);
@@ -24,7 +32,7 @@ namespace evfind
 				NativeMethods.Everything_GetResultFullPathName((uint)i, buffer, (uint)buffer.Capacity);
 				string windowsPath = buffer.ToString();
 				string wslPath = WslPath.convertWindowsPathToWsl(windowsPath);
-				Console.WriteLine($"windows: {windowsPath} wsl: {wslPath}");
+				// Console.WriteLine($"windows: {windowsPath} wsl: {wslPath}");
 				buffer.Clear();
 			}
 		} 

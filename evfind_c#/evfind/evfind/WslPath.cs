@@ -12,6 +12,7 @@ namespace evfind
     {
 
         static Regex m_DriveMountPattern = new Regex(@"[A-Z]:\\");
+        static Regex m_WslDriveMountPattern = new Regex(@"\\mnt\\[a-z]");
 
         /// <summary>
         /// Checks path for multiple drives. driveMountPattern should be declared outside of any
@@ -64,6 +65,80 @@ namespace evfind
             string wslPath = $"/mnt/{Char.ToLower(driveLetter)}/{windowsPath.Substring(3).Replace('\\', '/')}";
             return wslPath;
         }
+
+
+
+
+        private static string convertSlashes(string wslPath, char convertTo)
+        {
+           if (convertTo == '/')
+            {
+                wslPath = wslPath.Replace('\\', '/');
+            } else if (convertTo == '\\')
+            {
+                wslPath = wslPath.Replace('/', '\\');
+            }
+            else
+            {
+                throw new Exception("conversion char must be '\\' or '/'");
+            }
+            return wslPath;
+        }
+
+        private static void addBasePathIfRelative(string wslPath, string resPath)
+        {
+            if (wslPath[0] != '/')
+            {
+                resPath = Directory.GetCurrentDirectory();
+            }
+            resPath = Path.Join(resPath, convertSlashes(wslPath, '\\'));
+        }
+
+        private static void checkMnt(string wslPath, string resPath)
+        {
+            if (wslPath.Contains("/mnt/"))
+            {
+                m_WslDriveMountPattern.Replace(wslPath, 
+                    (match) => {
+                        char driveLetter = char.ToUpper(match.Value[5]);
+                        return $"{driveLetter}:\\";
+                    }
+                    );
+                resPath = wslPath;
+            }
+        }
+
+        private static string getWslRootDir()
+        {
+            string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            // do we need the dir sep char here?
+            // there's not a programatic way to do this?
+            string wslRootDir = $"{appData}{Path.DirectorySeparatorChar}Local\\Packages\\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\\LocalState\\rootfs\\";
+            return wslRootDir; 
+        }
+
+        /// <summary>
+        /// Converts a unix/wsl path to a windows path
+        /// </summary>
+        /// <param name="wslPath"></param>
+        /// <returns></returns>
+        public static string wslToWin(string wslPath)
+        {
+            // dont wanna allocate this every time.
+            string resPath = "";
+            string realPath = "";
+            if (wslPath != null && wslPath.Length > 0)
+            {
+                // conditions here are mutally exclusive, no need to join
+                addBasePathIfRelative(wslPath, resPath);
+                checkMnt(wslPath, resPath);
+                var resPathSlash = convertSlashes(resPath, '\\');
+                realPath = Path.GetFullPath(resPathSlash);
+            }
+            return realPath; 
+        }
+
+
 
     }
 }
