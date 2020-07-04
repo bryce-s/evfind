@@ -7,8 +7,6 @@ namespace evfind
     internal class NativeMethods
     {
 
-		public const int WINDOWS_PATH_LENTH_LIMIT = 260;
-
 		[DllImport("Everything64.dll", CharSet = CharSet.Unicode)]
 		public static extern UInt32 Everything_SetSearchW(string lpSearchString);
 		[DllImport("Everything64.dll")]

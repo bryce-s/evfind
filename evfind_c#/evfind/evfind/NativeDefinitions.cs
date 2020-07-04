@@ -7,6 +7,8 @@ namespace evfind
     internal class NativeDefinitions
     {
 
+        public const int WINDOWS_PATH_LENTH_LIMIT = 260;
+
         public const char NULLCHAR = '0';
         public const char LIVE = 'l';
         public const char COUNT = 'c';
