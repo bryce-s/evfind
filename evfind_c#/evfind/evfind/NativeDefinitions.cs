@@ -1,5 +1,5 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using System;
 using System.Text;
 
 namespace evfind
@@ -13,8 +13,8 @@ namespace evfind
         public const char LIVE = 'l';
         public const char COUNT = 'c';
         public const char ONLYIN = 'o';
-        public const char LITERAL = 'l'; 
-
+        public const char LITERAL = 'l';
+        public const char NAME = 'n';
 
         public const int EVERYTHING_OK = 0;
         public const int EVERYTHING_ERROR_MEMORY = 1;

@@ -56,7 +56,7 @@ namespace evfind
             {
                 // log to stderror for now
                 TextWriter errorWriter = Console.Error;
-                errorWriter.WriteLine(e.Message);
+                errorWriter.WriteLine($"critical: {e.Message}");
                 Environment.Exit(1);
             }
 

@@ -11,7 +11,7 @@ namespace evfind
     {
         public class Options
         { 
-            [Option('0', "null-char", Required=false, HelpText="Print an ASCII NUL character after each result path. Useful when used in conjunction with xargs -0")]
+            [Option('0', "null-char", Required=false, HelpText="Print an ASCII NUL character after each result path. Useful with xargs -0.")]
             public bool nullFlag { get; set; }
 
             [Option('l', "live", Required=false, HelpText = "evfind will live-update search results. The search can be cancelled with ctrl-c.")]
@@ -23,9 +23,11 @@ namespace evfind
             [Option('o', "onlyin", Required = false, HelpText = "Search only in the directory path specified.")]
             public string onlyin { get; set; }
 
-
             [Option('i', "literal", Required = false, HelpText = "Query string will be treated as literal.")]
             public bool literal { get; set; }
+
+            [Option('n', "name", Required = false, HelpText = "Filter by filename.")]
+            public string fileName { get; set; }
 
             //[Option('i', "interpret", Required = false, HelpText = "")]
 
@@ -52,14 +54,17 @@ namespace evfind
                     arguments.Add(NativeDefinitions.COUNT);
                 }
                 // right way to check this?
-                if (o.onlyin != "")
+                if (o.onlyin != null)
                 {
                     arguments.Add(NativeDefinitions.ONLYIN);
                 }
-
                 if (o.literal)
                 {
                     arguments.Add(NativeDefinitions.LITERAL);
+                }
+                if (o.fileName != null) 
+                {
+                    arguments.Add(NativeDefinitions.NAME);
                 }
             });
             return arguments;
