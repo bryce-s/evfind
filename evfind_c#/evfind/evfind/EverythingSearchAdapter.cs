@@ -19,18 +19,15 @@ namespace evfind
             m_argValues = searchOptions_in.Item2;
         }
 
-
         private bool optionPresent(char c)
         {
             return m_SearchOptions.Contains(c);
         }
-           
 
         private void addClosingSpace(StringBuilder queryBuilder)
         {
             queryBuilder.Append(" ");
         }
-
 
         private void matchSpecificPath(StringBuilder queryBuilder)
         {
@@ -48,27 +45,34 @@ namespace evfind
             addClosingSpace(queryBuilder);
         }
 
-        private string buildSearchQuery()
+        private void insertSearchTerms(List<string> searchTerms, StringBuilder queryBuilder)
+        {
+            foreach (string term in searchTerms)
+            {
+                queryBuilder.Append(term);
+            }
+        }
+
+        private string buildSearchQuery(List<string> searchTerms)
         {
             StringBuilder queryBuilder = new StringBuilder();
+            insertSearchTerms(searchTerms, queryBuilder);
             if (optionPresent(NativeDefinitions.NAME))
             {
                 matchFileName(queryBuilder);
             }
             if (optionPresent(NativeDefinitions.ONLYIN))
             {
-
+                matchSpecificPath(queryBuilder);
             }
-
-            return "stub";
+            return queryBuilder.ToString();
         }
 
-        public string queryEverything()
+        public void queryEverything(List<string> searchTerms)
         {
-            string searchQuery = buildSearchQuery();
+            string searchQuery = buildSearchQuery(searchTerms);
             NativeMethods.Everything_SetSearchW(searchQuery);
-            return "hey";
+            NativeMethods.Everything_QueryW(true);
         }
-
     }
 }

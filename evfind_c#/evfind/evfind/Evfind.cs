@@ -14,27 +14,15 @@ namespace evfind
         {
 			Args argParser = new Args();
 			Tuple<List<char>, Dictionary<char, string>> arguments = argParser.runArguments(args);
-
-			EverythingSearchAdapter searchAdapter = new EverythingSearchAdapter(arguments); 
 			
+			List<string> searchTerms = argParser.removeCommandLineOptions(args);
 
-			foreach(string s in args)
-			{
-				Console.WriteLine(s);
-			}
+			EverythingSearchAdapter searchAdapter = new EverythingSearchAdapter(arguments);
+			searchAdapter.queryEverything(searchTerms);
 
-			NativeMethods.Everything_SetSearchW("bryce");
-			NativeMethods.Everything_QueryW(true);
-			NativeMethods.Everything_SortResultsByPath();
-			var buffer = new StringBuilder(NativeDefinitions.WINDOWS_PATH_LENTH_LIMIT);
-			for (uint i = 0; i < NativeMethods.Everything_GetNumResults(); i++)
-			{
-				NativeMethods.Everything_GetResultFullPathName((uint)i, buffer, (uint)buffer.Capacity);
-				string windowsPath = buffer.ToString();
-				string wslPath = WslPath.convertWindowsPathToWsl(windowsPath);
-				// Console.WriteLine($"windows: {windowsPath} wsl: {wslPath}");
-				buffer.Clear();
-			}
+			DisplayResults displayObject = new DisplayResults(arguments);
+			displayObject.displayResults();
+
 		} 
     }
 }

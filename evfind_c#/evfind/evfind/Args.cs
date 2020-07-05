@@ -9,6 +9,40 @@ namespace evfind
     
     class Args
     {
+
+        public List<string> optionsForRemoval()
+        {
+            List<string> opts = new List<string>()
+            {
+                "-0", "--null-char",
+                "-l", "--live",
+                "-c", "--count",
+                "-o", "--onlyin",
+                "-i", "--literal",
+                "-n", "--name",
+            };
+            return opts;
+        }
+
+        public List<string> removeCommandLineOptions(string[] args)
+        {
+            List<string> optionsToRemove = optionsForRemoval();
+            List<string> searchTerms = new List<string>();
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (optionsToRemove.Contains(args[i]))
+                {
+                    i++;
+                }
+                else
+                {
+                    searchTerms.Add(args[i]);
+                }
+            }
+            return searchTerms;
+        }
+
+
         public class Options
         { 
             [Option('0', "null-char", Required=false, HelpText="Print an ASCII NUL character after each result path. Useful with xargs -0.")]

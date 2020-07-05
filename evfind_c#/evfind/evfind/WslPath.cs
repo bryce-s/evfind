@@ -48,7 +48,7 @@ namespace evfind
         /// </summary>
         /// <param name="windowsPath"></param>
         /// <returns></returns>
-        public static string convertWindowsPathToWsl(string windowsPath)
+        public static string winToWsl(string windowsPath)
         {
             try
             {
@@ -66,9 +66,6 @@ namespace evfind
             return wslPath;
         }
 
-
-
-
         private static string convertSlashes(string wslPath, char convertTo)
         {
            if (convertTo == '/')
@@ -85,7 +82,7 @@ namespace evfind
             return wslPath;
         }
 
-        private static void addBasePathIfRelative(string wslPath, string resPath)
+        private static void addBasePathIfRelative(string wslPath, ref string resPath)
         {
             if (wslPath[0] != '/')
             {
@@ -94,7 +91,7 @@ namespace evfind
             resPath = Path.Join(resPath, convertSlashes(wslPath, '\\'));
         }
 
-        private static void checkMnt(string wslPath, string resPath)
+        private static void checkMnt(string wslPath, ref string resPath)
         {
             if (wslPath.Contains("/mnt/"))
             {
@@ -130,8 +127,8 @@ namespace evfind
             if (wslPath != null && wslPath.Length > 0)
             {
                 // conditions here are mutally exclusive, no need to join
-                addBasePathIfRelative(wslPath, resPath);
-                checkMnt(wslPath, resPath);
+                addBasePathIfRelative(wslPath, ref resPath);
+                checkMnt(wslPath, ref resPath);
                 var resPathSlash = convertSlashes(resPath, '\\');
                 realPath = Path.GetFullPath(resPathSlash);
             }
