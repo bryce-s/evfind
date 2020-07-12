@@ -63,6 +63,9 @@ namespace evfind
             [Option('n', "name", Required = false, HelpText = "Filter by filename.")]
             public string fileName { get; set; }
 
+            [Option('s', "case-sensitive", Required = false, HelpText = "Makes the query case-sensitive.")]
+            public bool caseSensitive { get; set; }
+
             //[Option('i', "interpret", Required = false, HelpText = "")]
 
         }
@@ -102,6 +105,10 @@ namespace evfind
                 {
                     arguments.Add(NativeDefinitions.NAME);
                     argValues.Add(NativeDefinitions.NAME, o.fileName);
+                }
+                if (o.caseSensitive)
+                {
+                    arguments.Add(NativeDefinitions.CASE_SENSITIVE);
                 }
             });
             return Tuple.Create(arguments, argValues);

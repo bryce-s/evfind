@@ -38,6 +38,13 @@ namespace evfind
             addClosingSpace(queryBuilder);
         }
 
+        
+        private void caseSensitive(StringBuilder queryBuilder)
+        {
+            queryBuilder.Append("case:");
+            addClosingSpace(queryBuilder); 
+        }
+
         private void matchFileName(StringBuilder queryBuilder)
         {
             string fileArgument = m_argValues[NativeDefinitions.NAME];
@@ -56,7 +63,6 @@ namespace evfind
         private string buildSearchQuery(List<string> searchTerms)
         {
             StringBuilder queryBuilder = new StringBuilder();
-            insertSearchTerms(searchTerms, queryBuilder);
             if (optionPresent(NativeDefinitions.NAME))
             {
                 matchFileName(queryBuilder);
@@ -65,12 +71,21 @@ namespace evfind
             {
                 matchSpecificPath(queryBuilder);
             }
+            if (optionPresent(NativeDefinitions.CASE_SENSITIVE))
+            {
+                caseSensitive(queryBuilder);
+            }
+            insertSearchTerms(searchTerms, queryBuilder);
             return queryBuilder.ToString();
         }
 
         public void queryEverything(List<string> searchTerms)
         {
             string searchQuery = buildSearchQuery(searchTerms);
+            if (searchQuery == "" || searchQuery == null)
+            {
+                return;
+            }
             NativeMethods.Everything_SetSearchW(searchQuery);
             NativeMethods.Everything_QueryW(true);
         }

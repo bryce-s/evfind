@@ -15,6 +15,7 @@ namespace evfind
         public const char ONLYIN = 'o';
         public const char LITERAL = 'l';
         public const char NAME = 'n';
+        public const char CASE_SENSITIVE = 'c';
 
         public const int EVERYTHING_OK = 0;
         public const int EVERYTHING_ERROR_MEMORY = 1;
