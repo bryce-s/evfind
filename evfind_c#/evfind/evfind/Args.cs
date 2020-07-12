@@ -12,6 +12,7 @@ namespace evfind
 
         public List<string> optionsForRemoval()
         {
+            // todo: nested namespaces for these might be nice.
             List<string> opts = new List<string>()
             {
                 "-0", "--null-char",
@@ -20,6 +21,9 @@ namespace evfind
                 "-o", "--onlyin",
                 "-i", "--literal",
                 "-n", "--name",
+                "-s", "--case-sensitive",
+                "--help",
+                "--version"
             };
             return opts;
         }
@@ -28,13 +32,13 @@ namespace evfind
         {
             List<string> optionsToRemove = optionsForRemoval();
             List<string> searchTerms = new List<string>();
+            if (args.Contains("--help") || args.Contains("--version"))
+            {
+                Environment.Exit(1);
+            }
             for (int i = 0; i < args.Length; i++)
             {
-                if (optionsToRemove.Contains(args[i]))
-                {
-                    i++;
-                }
-                else
+                if (!optionsToRemove.Contains(args[i]))
                 {
                     searchTerms.Add(args[i]);
                 }
@@ -65,9 +69,6 @@ namespace evfind
 
             [Option('s', "case-sensitive", Required = false, HelpText = "Makes the query case-sensitive.")]
             public bool caseSensitive { get; set; }
-
-            //[Option('i', "interpret", Required = false, HelpText = "")]
-
         }
         public Args()
         {
@@ -81,39 +82,37 @@ namespace evfind
             {
                 if (o.nullFlag)
                 {
-                    arguments.Add(NativeDefinitions.NULLCHAR);
+                    arguments.Add(SearchDefinitions.NULLCHAR);
                 }
                 if (o.liveResults)
                 {
-                    arguments.Add(NativeDefinitions.LIVE);
+                    arguments.Add(SearchDefinitions.LIVE);
                 }
                 if (o.count)
                 {
-                    arguments.Add(NativeDefinitions.COUNT);
+                    arguments.Add(SearchDefinitions.COUNT);
                 }
                 // right way to check this?
                 if (o.onlyin != null)
                 {
-                    arguments.Add(NativeDefinitions.ONLYIN);
-                    argValues.Add(NativeDefinitions.ONLYIN, o.onlyin);
+                    arguments.Add(SearchDefinitions.ONLYIN);
+                    argValues.Add(SearchDefinitions.ONLYIN, o.onlyin);
                 }
                 if (o.literal)
                 {
-                    arguments.Add(NativeDefinitions.LITERAL);
+                    arguments.Add(SearchDefinitions.LITERAL);
                 }
                 if (o.fileName != null) 
                 {
-                    arguments.Add(NativeDefinitions.NAME);
-                    argValues.Add(NativeDefinitions.NAME, o.fileName);
+                    arguments.Add(SearchDefinitions.NAME);
+                    argValues.Add(SearchDefinitions.NAME, o.fileName);
                 }
                 if (o.caseSensitive)
                 {
-                    arguments.Add(NativeDefinitions.CASE_SENSITIVE);
+                    arguments.Add(SearchDefinitions.CASE_SENSITIVE);
                 }
             });
             return Tuple.Create(arguments, argValues);
         }
-
-
     }
 }

@@ -31,14 +31,13 @@ namespace evfind
 
         private void matchSpecificPath(StringBuilder queryBuilder)
         {
-            string path = m_argValues[NativeDefinitions.ONLYIN];
+            string path = m_argValues[SearchDefinitions.ONLYIN];
             // convert to windows path and validate it
-            path = WslPath.wslToWin(path);
+            path = ParseWslPath.wslToWin(path);
             queryBuilder.Append($"\"{path}\"");
             addClosingSpace(queryBuilder);
         }
 
-        
         private void caseSensitive(StringBuilder queryBuilder)
         {
             queryBuilder.Append("case:");
@@ -47,7 +46,7 @@ namespace evfind
 
         private void matchFileName(StringBuilder queryBuilder)
         {
-            string fileArgument = m_argValues[NativeDefinitions.NAME];
+            string fileArgument = m_argValues[SearchDefinitions.NAME];
             queryBuilder.Append($"file: ${fileArgument}");
             addClosingSpace(queryBuilder);
         }
@@ -63,15 +62,15 @@ namespace evfind
         private string buildSearchQuery(List<string> searchTerms)
         {
             StringBuilder queryBuilder = new StringBuilder();
-            if (optionPresent(NativeDefinitions.NAME))
+            if (optionPresent(SearchDefinitions.NAME))
             {
                 matchFileName(queryBuilder);
             }
-            if (optionPresent(NativeDefinitions.ONLYIN))
+            if (optionPresent(SearchDefinitions.ONLYIN))
             {
                 matchSpecificPath(queryBuilder);
             }
-            if (optionPresent(NativeDefinitions.CASE_SENSITIVE))
+            if (optionPresent(SearchDefinitions.CASE_SENSITIVE))
             {
                 caseSensitive(queryBuilder);
             }
