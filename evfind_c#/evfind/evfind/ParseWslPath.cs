@@ -89,6 +89,7 @@ namespace evfind
                 resPath = Directory.GetCurrentDirectory();
             }
             resPath = Path.Join(resPath, convertSlashes(wslPath, '\\'));
+            resPath = Path.GetFullPath(resPath);
         }
 
         private static void checkMnt(string wslPath, ref string resPath)

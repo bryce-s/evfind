@@ -38,6 +38,12 @@ namespace evfind
             }
             for (int i = 0; i < args.Length; i++)
             {
+                if (args[i] == "-o" || args[i] == "--onlyin" ||
+                    args[i] == "-n" || args[i] == "--name")
+                {
+                    // don't add this one, don't add the next one.
+                    i++;
+                } else
                 if (!optionsToRemove.Contains(args[i]))
                 {
                     searchTerms.Add(args[i]);
