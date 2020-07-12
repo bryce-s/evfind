@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "evfind": {
+      "commandName": "Project",
+      "commandLineArgs": "--onlyin . bryce"
+    }
+  }
+}
