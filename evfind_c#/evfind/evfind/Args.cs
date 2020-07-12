@@ -80,7 +80,7 @@ namespace evfind
             Dictionary<char, string> argValues = new Dictionary<char, string>();
             Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
             {
-                if (o.nullFlag)
+                if (o.nullFlag || args.Contains("-0"))
                 {
                     arguments.Add(SearchDefinitions.NULLCHAR);
                 }

@@ -55,7 +55,14 @@ namespace evfind
         {
             foreach (string term in searchTerms)
             {
-                queryBuilder.Append(term);
+                if (term.Contains('/'))
+                {
+                    // won't match off /mnt/{driveLetter}
+                    queryBuilder.Append(term.Replace('/', '\\'));
+                } else
+                {
+                    queryBuilder.Append(term);
+                }
             }
         }
 
