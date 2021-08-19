@@ -1,6 +1,6 @@
 # evfind
 
-A WSL CLI app designed to mimic MacOS's [mdfind](https://ss64.com/osx/mdfind.html). Uses voidtool's [everything](https://www.voidtools.com/). In practice, this tool works similarly to `find`, except it doesn't require running `sudo updatedb` to locate new files.
+A WSL CLI app designed to mimic MacOS's [mdfind](https://ss64.com/osx/mdfind.html). Uses voidtool's [everything](https://www.voidtools.com/). In practice, this tool works similarly to `locate`, except it doesn't require running `sudo updatedb` to recognize new files.
 
 
 ## Usage Example
