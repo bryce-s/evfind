@@ -1,5 +1,16 @@
 # evfind
 
+A WSL CLI app designed to mimic MacOS's [mdfind](https://ss64.com/osx/mdfind.html). Uses voidtool's [everything](https://www.voidtools.com/).
+
+## Usage Example
+```zsh
+➜  ~ evfind robots.txt | grep robots.txt | head -5
+/Users/brycesmith/Files/site/front-end/build/robots.txt
+/Users/brycesmith/Downloads/robots.txt
+/Users/brycesmith/Files/site/front-end/public/robots.txt
+/Users/brycesmith/Files/website/static/robots.txt
+```
+
 ## Quick Install
 
 - cd to the directory you'd like to install the binaries in.
