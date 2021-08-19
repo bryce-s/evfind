@@ -5,10 +5,10 @@ A WSL CLI app designed to mimic MacOS's [mdfind](https://ss64.com/osx/mdfind.htm
 ## Usage Example
 ```zsh
 ➜  ~ evfind robots.txt | grep robots.txt | head -5
-/Users/brycesmith/Files/site/front-end/build/robots.txt
-/Users/brycesmith/Downloads/robots.txt
-/Users/brycesmith/Files/site/front-end/public/robots.txt
-/Users/brycesmith/Files/website/static/robots.txt
+mnt/c/brycesmith/Files/site/front-end/build/robots.txt
+mnt/c/brycesmith/Downloads/robots.txt
+mnt/c/brycesmith/Files/site/front-end/public/robots.txt
+mnt/c/brycesmith/Files/website/static/robots.txt
 ```
 
 ## Quick Install
